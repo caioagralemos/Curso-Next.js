@@ -8,7 +8,6 @@ export default function EventsHomePage() {
     return <div>
       <EventsSearch />
       <EventList items={allEvents} />
-      <Link href="/">Voltar para Home</Link>
     </div>;
 }
 

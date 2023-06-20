@@ -9,6 +9,5 @@ export default function HomePage() {
   return <div>
     <EventsSearch />
     <EventList items={featuredEvents}/>
-    <Link href="/events">Ir para todos os eventos</Link>
   </div>;
 }

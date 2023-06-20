@@ -4,8 +4,10 @@ import Button from "../ui/Button";
 import AddressIcon from "../icons/address-icon";
 import ArrowRightIcon from "../icons/arrow-right-icon"
 import DateIcon from "../icons/date-icon";
+import { useRouter } from "next/router";
 
 export default function EventItem({ item, id }) {
+  const router = useRouter()
   const humanReadableDate = new Date(item.date).toLocaleDateString("pt-BR", {
     day: "numeric",
     month: "long",
@@ -16,7 +18,7 @@ export default function EventItem({ item, id }) {
   const exploreLink = `/events/${id}`;
 
   return (
-    <li className={classes.item} key={id}>
+    <li className={classes.item}>
       <img
         src={item.image}
         alt=""

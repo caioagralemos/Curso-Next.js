@@ -14,6 +14,7 @@ function HomePage(props) {
 }
 
 // FETCHING DATA ON SERVER SIDE (getStaticProps)
+// getStaticProps é usada para pré-renderizar uma página estática com os dados necessários antes do aplicativo ser implantado.
 export async function getStaticProps() {
   // process.cwd() faz a base ser a pasta principal do projeto
   console.log("(Re)validando...");

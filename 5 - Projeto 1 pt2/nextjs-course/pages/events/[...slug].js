@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import { getFilteredEvents } from "../../data/dummy-data";
 import EventList from "../../components/events/eventList";
+import { getFilteredEvents } from "../../components/data/api-util";
 
 export default function FilterEventPage() {
   const router = useRouter();

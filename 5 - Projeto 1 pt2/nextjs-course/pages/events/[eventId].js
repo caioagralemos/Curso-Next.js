@@ -1,15 +1,19 @@
 import { useRouter } from "next/router";
-import { getEventById } from "../../components/data/api-util";
+import { getEventById, getFeaturedEvents } from "../../components/data/api-util";
 import { Fragment } from "react";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
 
 export default function SpecificEventPage(props) {
-  const event = props.selectedEvent
+  const event = props.selectedEvent;
 
   if (!event) {
-    return <h1>Evento não encontrado!</h1>;
+    return (
+      <div className="center">
+        <p>Loading...</p>
+      </div>
+    )
   }
 
   return (
@@ -34,19 +38,20 @@ export async function getStaticProps(context) {
 
   return {
     props: {
-      selectedEvent: event
-    }
-  }
+      selectedEvent: event,
+    },
+    revalidate: 1800
+  };
 }
 
 // EM PÁGINAS DINÂMICAS PRECISAMOS IMPLEMENTAR GETSTATICPATHS
-export async function getStaticPaths(context) {
-  const eventId = context.params.eventId;
-  const event = await getEventById(eventId);
-
+export async function getStaticPaths() {
+  // aqui precisamos retornar pra quais IDS nós queremos retornar páginas
+  const events = await getFeaturedEvents(); // aqui só retorna os eventos destacados, mas com o fallback ativado ele vai gerar dinamicamente os outros
+  const paths = events.map((event) => ({ params: { eventId: event.id } }));
   return {
-    props: {
-      selectedEvent: event
-    }
-  }
+    paths: paths,
+    fallback: true, // perguntando se é possível que sejam criadas mais paginas do que foi passado por padrao
+    // fallback pode ser true, false ou blocking para demorar pra carregar a pag mas ja carregar de uma vez
+  };
 }

@@ -1,23 +1,11 @@
-import { useRouter } from "next/router";
 import { Fragment } from "react";
 import EventList from "../../components/events/eventList";
 import { getFilteredEvents } from "../../components/data/api-util";
+import { useRouter } from "next/router";
 
-export default function FilterEventPage() {
-  const router = useRouter();
-
-  if (!router.query.slug) {
-    return (
-      <div>
-        <h1>Invalid Date</h1>
-      </div>
-    );
-  }
-
-  const events = getFilteredEvents(
-    +router.query.slug[0],
-    +router.query.slug[1]
-  );
+export default function FilterEventPage(props) {
+  const router = useRouter()
+  const events = props.filteredEvents;
 
   if (!events) {
     return (
@@ -41,4 +29,25 @@ export default function FilterEventPage() {
       <EventList items={events} />
     </Fragment>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const filterData = params.slug;
+  const events = await getFilteredEvents(+filterData[0], +filterData[1]);
+
+  if (!params.slug || params.slug.length != 2) {
+    return {
+      notFound: true,
+      // redirect: {
+      //   destination: './error'
+      // }
+    };
+  }
+
+  return {
+    props: {
+      filteredEvents: events,
+    },
+  };
 }

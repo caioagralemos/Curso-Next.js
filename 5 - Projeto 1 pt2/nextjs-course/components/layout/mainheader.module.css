@@ -39,3 +39,8 @@
       font-size: 1.5rem;
     }
   }
+
+  .img {
+    width: 30px;
+    margin-right: 10px;
+  }

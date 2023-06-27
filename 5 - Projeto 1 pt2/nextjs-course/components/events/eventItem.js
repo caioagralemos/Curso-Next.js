@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import classes from "./eventItem.module.css";
 import Button from "../ui/Button";
 import AddressIcon from "../icons/address-icon";
@@ -19,10 +19,12 @@ export default function EventItem({ item, id }) {
 
   return (
     <li className={classes.item}>
-      <img
+      <Image
         src={item.image}
-        alt=""
+        alt={item.title}
         className={classes.icon}
+        width={250}
+        height={160}
       />
       <div className={classes.context}>
         <div className={classes.summary}>

@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
+import Head from "next/head";
 
 export default function SpecificEventPage(props) {
   const event = props.selectedEvent;
@@ -13,11 +14,18 @@ export default function SpecificEventPage(props) {
       <div className="center">
         <p>Loading...</p>
       </div>
-    )
+    );
   }
 
   return (
     <Fragment>
+      <Head>
+        <title>{event.title}</title>
+        <meta
+          name="description"
+          content={event.description}
+        />
+      </Head>
       <EventSummary title={event.title} />
       <EventLogistics
         date={event.date}
@@ -40,7 +48,7 @@ export async function getStaticProps(context) {
     props: {
       selectedEvent: event,
     },
-    revalidate: 1800
+    revalidate: 1800,
   };
 }
 

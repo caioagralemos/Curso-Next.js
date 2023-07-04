@@ -4,6 +4,8 @@ import EventList from "../components/events/eventList";
 import EventsSearch from "../components/events/eventsSearch";
 import { getFeaturedEvents } from "../components/data/api-util";
 
+import NewsletterRegistration from "../components/input/newsletter-registration";
+
 export default function HomePage(props) {
   return (
     <div>
@@ -15,6 +17,7 @@ export default function HomePage(props) {
         />
       </Head>
       <EventsSearch />
+      <NewsletterRegistration />
       <EventList items={props.featuredEvents} />
     </div>
   );

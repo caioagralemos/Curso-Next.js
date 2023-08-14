@@ -1,17 +1,21 @@
 import { MongoClient } from "mongodb";
 
-async function connectDatabase() {
+export async function connectDatabase() {
     const client = await MongoClient.connect(
       "mongodb+srv://caio:8501@nextjs-course.zwmahox.mongodb.net/events?retryWrites=true&w=majority"
     );
-  
+
     return client;
-  }
+}
   
-async function insertDocument(client, collection, document) {
-    const db = client.db()
-  
-    await db.collection(collection).insertOne(document)
+export async function insertDocument(client, collection, document) {
+    const db = client.db('events')
+    const result = await db.collection(collection).insertOne(document)
+    return result;
   }
 
-export {insertDocument, connectDatabase}
+export async function getAllDocuments(client, collection, sort, filter={}) {
+    const db = client.db('events');
+    const documents = await db.collection(collection).find(filter).sort(sort).toArray();
+    return documents;
+}

@@ -13,10 +13,8 @@ export default async function Fetcher(url) {
   }
 
   if (data) {
-    console.log(array);
     return array;
   } else {
-    console.log(error);
     return false;
   }
 

@@ -1,28 +1,32 @@
-import fs from "fs";
-import path from "path";
-import { MongoClient } from "mongodb";
+import { connectDatabase, insertDocument } from "../../components/data/db-util";
 
 export default async function handler(req, res) {
   if (req.method == "POST") {
     const email = req.body.email;
 
-    const client = await MongoClient.connect(
-      "mongodb+srv://caio:8501@nextjs-course.zwmahox.mongodb.net/?retryWrites=true&w=majority"
-    );
-
-    const db = client.db("newsletter");
-
-    if (db.collection("emails").includes(email)) {
-      res.status(500).json({ message: "Erro: Email já registrado" });
-    } else if (!email.includes("@") || email == "" || email == " ") {
-      res.status(500).json({ message: "Erro: Email inválido" });
-    } else {
-      db.collection("emails").insertOne({ email: email });
-      res
-        .status(200)
-        .json({ message: "Registrado com Sucesso!", email: email });
+    try {
+      const client = await connectDatabase()
+    } catch(err) {
+      res.status(500).json({ message: "Falha em conectar com o banco de dados." });
+      return;
     }
 
+    if (client.db().collection("emails").includes(email)) {
+      res.status(500).json({ message: "Erro: Email já registrado" });
+      return;
+    } else if (!email.includes("@") || email == "" || email == " ") {
+      res.status(500).json({ message: "Erro: Email inválido" });
+      return;
+    }
+    
+    try {
+    await insertDocument(client, 'newsletter', { email: email });
     client.close()
+    } catch (err) {
+      res.status(500).json({ message: "Algo deu errado inserindo os dados." });
+      return;
+    }
+
+    res.status(200).json({ message: "Registrado com Sucesso!", email: email });
   }
 }

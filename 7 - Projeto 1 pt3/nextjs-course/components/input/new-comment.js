@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import classes from './new-comment.module.css';
+import Button from '../ui/Button.js';
 
 function NewComment(props) {
   const [isInvalid, setIsInvalid] = useState(false);
@@ -52,7 +53,7 @@ function NewComment(props) {
         <textarea id='comment' rows='5' ref={commentInputRef}></textarea>
       </div>
       {isInvalid && <p>Please enter a valid email address and comment!</p>}
-      <button>Submit</button>
+      <Button>Submit</Button>
     </form>
   );
 }

@@ -17,7 +17,7 @@ function NewsletterRegistration() {
     })
 
     const reqBody = { email: enteredEmail };
-    
+
       fetch("/api/newsletter", {
         method: "POST",
         body: JSON.stringify(reqBody),
@@ -25,7 +25,7 @@ function NewsletterRegistration() {
           "Content-Type": "application/json",
         },
       })
-        .then((response) => {   console.log("Response:", response);  if(response.ok) { return response.json() } return response.json().then(data => {throw new Error(data.message || 'Algo deu errado')})})
+        .then((response) => { if(response.ok) { return response.json() } return response.json().then(data => {throw new Error(data.message || 'Algo deu errado')})})
         .then((data) => {
           notificationCtx.showNotification({
             title: 'Sucesso!',
@@ -36,7 +36,7 @@ function NewsletterRegistration() {
         }).catch(error => {
           notificationCtx.showNotification({
             title: 'Algo deu errado :(',
-            message: `Não conseguimos te inscrever em nossa newsletter, tente novamente mais tarde ${error}`,
+            message: `Não conseguimos te inscrever em nossa newsletter, tente novamente mais tarde`,
             status: 'error',
           })
         });

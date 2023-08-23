@@ -1,3 +1,6 @@
+import AllPosts from "@/components/posts/all-posts";
+import DUMMY_POSTS from "@/data/dummy-posts";
+
 export default function AllPostsPage() {
-    return <h1>All Posts!</h1>
+    return <AllPosts posts={DUMMY_POSTS}/>
 }

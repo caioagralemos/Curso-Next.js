@@ -1,10 +1,8 @@
 import fs from 'fs';
 import path from 'path'
 
-// Caminho completo para o diretório base da aplicação
 const basePath = path.join(__dirname, '..', '..', '..', '..'); // Voltar dois níveis do diretório atual
 
-// Caminho completo para o arquivo JSON
 const filePath = path.join(basePath, 'contacts.json');
 
 export default async function handler(req, res) {

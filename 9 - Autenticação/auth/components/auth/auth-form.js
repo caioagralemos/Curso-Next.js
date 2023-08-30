@@ -39,7 +39,6 @@ function AuthForm() {
         const result = await signIn('credentials', {redirect: false, email: enteredEmail, password: enteredPassword})
 
         if (result.error) {
-          // error catching
           console.log(result.error)
         } else {
           emailInputRef.current.value = ''

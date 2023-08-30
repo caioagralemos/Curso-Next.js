@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import classes from './auth-form.module.css';
+import { signIn } from 'next-auth/react'
 
 async function createUser(email, password) {
   const response = await fetch('/api/auth/register', {
@@ -35,8 +36,16 @@ function AuthForm() {
     const enteredPassword = passwordInputRef.current.value
 
     if(isLogin) {
-      // logar usuário
-      return;
+        const result = await signIn('credentials', {redirect: false, email: enteredEmail, password: enteredPassword})
+
+        if (result.error) {
+          // error catching
+          console.log(result.error)
+        } else {
+          emailInputRef.current.value = ''
+          passwordInputRef.current.value = ''
+        }
+
     } else {
       try {
         const result = await createUser(enteredEmail, enteredPassword)

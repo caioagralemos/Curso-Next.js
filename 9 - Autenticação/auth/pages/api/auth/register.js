@@ -24,8 +24,10 @@ export default async function handler(req, res) {
     const client = await connectToDatabase();
 
     const db = client.db("auth").collection("accounts");
+    
+    const user = await db.findOne({'email': email})
 
-    if (db.find({'email': email})) {
+    if (user) {
         res.status(422)
         .json({
           message: "Esse email já está sendo utlizado :/",
@@ -33,7 +35,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
     const result = await db.insertOne({
       email: email,
